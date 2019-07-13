@@ -1,13 +1,13 @@
 uint8_t _DS_reset()
 {
-    DS18B20port.DIRSET = DS18B20pin;
-    DS18B20port.OUTCLR = DS18B20pin;
+    DS18B20_port.DIRSET = DS18B20_pin;
+    DS18B20_port.OUTCLR = DS18B20_pin;
 	_delay_us(480); // 480 min (480)
 
-    DS18B20port.DIRCLR = DS18B20pin;
+    DS18B20_port.DIRCLR = DS18B20_pin;
 	_delay_us(60); // 60-255 (60)
 
-    uint8_t ret = DS18B20port.IN & DS18B20pin; // 0: ok
+    uint8_t ret = DS18B20_port.IN & DS18B20_pin; // 0: ok
 	_delay_us(420);  // (420)
 
 	return ret;
@@ -15,16 +15,16 @@ uint8_t _DS_reset()
 
 void _DS_writebit(uint8_t bit)
 {
-    DS18B20port.DIRSET = DS18B20pin;
-    DS18B20port.OUTCLR = DS18B20pin;
+    DS18B20_port.DIRSET = DS18B20_pin;
+    DS18B20_port.OUTCLR = DS18B20_pin;
 	_delay_us(1);
 
 	// write 1: release the line
 	if(bit)
-        DS18B20port.DIRCLR = DS18B20pin;
+        DS18B20_port.DIRCLR = DS18B20_pin;
 
 	_delay_us(60); // 59 min
-    DS18B20port.DIRCLR = DS18B20pin;
+    DS18B20_port.DIRCLR = DS18B20_pin;
 	_delay_us(10);
 }
 
@@ -32,14 +32,14 @@ uint8_t _DS_readbit(void)
 {
 	uint8_t ret=0;
 
-    DS18B20port.DIRSET = DS18B20pin;
-    DS18B20port.OUTCLR = DS18B20pin;
+    DS18B20_port.DIRSET = DS18B20_pin;
+    DS18B20_port.OUTCLR = DS18B20_pin;
 	_delay_us(1);
 
-    DS18B20port.DIRCLR = DS18B20pin;
+    DS18B20_port.DIRCLR = DS18B20_pin;
 	_delay_us(13);
 
-    if(DS18B20port.IN & DS18B20pin)
+    if(DS18B20_port.IN & DS18B20_pin)
 		ret=1;
 	_delay_us(60);
 	return ret;
