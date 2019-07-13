@@ -24,40 +24,12 @@ def uart(
         raise Exception
     if not rx and not tx:
         raise Exception
-    dico = collections.OrderedDict(
-        {
-            "USARTname": name,
-            "USARTport": f"PORT{name[0]}",
-            "USARTtxpin": f"PIN{txpin}_bm",
-            "USARTprefix": prefix,
-            "USARTrxlen": f"{rxlen}",
-            "USARTtxlen": f"{txlen}",
-            "USARTbaudrate": f"{baudrate}",
-            "USARTchsize": f"{char_size}",
-            "USARTrxtrigger": "'" + rxtrigger.encode("unicode_escape").decode() + "'",
-            "USARTrxen": 'true' if rx else 'false',
-            "USARTtxen": 'true' if tx else 'false',
-        }
-    )
+    dico = collections.OrderedDict()
 
     if rxhandler is not None:
-        dico["USARTrxhandler"] = rxhandler
+        dico["UART_rxhandler"] = rxhandler
 
-    if tx:
-        dico["_USART_txbuffer"] = f"{prefix}_txbuffer"
-        dico["_USART_txidxA"] = f"{prefix}_txidxA"
-        dico["_USART_txidxB"] = f"{prefix}_txidxB"
-        dico["_USART_putchar"] = f"{prefix}_putchar"
-        dico["_USART_putzchar"] = f"{prefix}_putzchar"
-        dico["_USART_putfloat"] = f"{prefix}_putfloat"
-        dico["_USART_printf"] = f"{prefix}_printf"
-
-    if rx:
-        dico["_USART_rxbuffer"] = f"{prefix}_rxbuffer"
-        dico["_USART_rxidx"] = f"{prefix}_rxidx"
-
-    dico["_USART_init"] = f"{prefix}_init"
-    dico["_USART"] = f"USART{name}"
+    dico["USARTPREFIX"] = prefix
 
     filename = LIBDIR + "/uart." + ("h" if header else "c")
     with open(filename) as f:
@@ -90,6 +62,25 @@ def uart(
 
     content = "\n".join(filtered)
 
+    constants = collections.OrderedDict(
+        {
+            "UART_port": f"PORT{name[0]}",
+            "UART_txpin": f"PIN{txpin}_bm",
+            "UART_rxlen": f"{rxlen}",
+            "UART_txlen": f"{txlen}",
+            "UART_baudrate": f"{baudrate}",
+            "UART_chsize": f"{char_size}",
+            "UART_rxtrigger": "'" + rxtrigger.encode("unicode_escape").decode() + "'",
+            "UART_rxen": "true" if rx else "false",
+            "UART_txen": "true" if tx else "false",
+            "UART_USART": f"USART{name}",
+            "UART_DRE_vect": f"USART{name}_DRE_vect",
+            "UART_RXC_vect": f"USART{name}_RXC_vect",
+        }
+    )
+
+    defined, content = generate_define("UART", prefix, constants, content)
+
     if header:
-        return protect_header(f"UART_{prefix}", content)
+        return protect_header(f"UART_{prefix}", defined + "\n" + content)
     return content
