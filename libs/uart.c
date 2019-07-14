@@ -39,11 +39,11 @@ void USARTPREFIX_init()
     UART_USART.CTRLC = USART_CMODE_ASYNCHRONOUS_gc | USART_PMODE_DISABLED_gc;
     if(UART_chsize==5)
         UART_USART.CTRLC |= USART_CHSIZE_5BIT_gc;
-    else if(USART_chsize==6)
+    else if(UART_chsize==6)
         UART_USART.CTRLC |= USART_CHSIZE_6BIT_gc;
-    else if(USART_chsize==7)
+    else if(UART_chsize==7)
         UART_USART.CTRLC |= USART_CHSIZE_7BIT_gc;
-    else if(USART_chsize==8)
+    else if(UART_chsize==8)
         UART_USART.CTRLC |= USART_CHSIZE_8BIT_gc;
     else
         UART_USART.CTRLC |= USART_CHSIZE_9BIT_gc;
@@ -92,7 +92,7 @@ void USARTPREFIX_putchar(uint8_t ch)
 
     USARTPREFIX_txbuffer[USARTPREFIX_txidxB] = ch;
     USARTPREFIX_txidxB++;
-    USARTPREFIX_txidxB%=USRT_txlen;
+    USARTPREFIX_txidxB%=UART_txlen;
 
     UART_USART.CTRLA = (UART_USART.CTRLA & ~USART_DREINTLVL_gm) | USART_DREINTLVL_MED_gc;
 }
