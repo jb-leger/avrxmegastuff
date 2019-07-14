@@ -5,8 +5,7 @@ import collections
 def ds18b20(
     *,
     prefix,
-    port,
-    pin,
+    pindesc,
     header=True,
 ):
     dico = collections.OrderedDict()
@@ -30,8 +29,8 @@ def ds18b20(
     content = "\n".join(filtered)
 
     constants = collections.OrderedDict({
-        "DS18B20_port": port,
-        "DS18B20_pin": f"PIN{pin}_bm",
+        "DS18B20_port": pindesc.port,
+        "DS18B20_pin": pindesc.pin_bm,
         'DS18B20_CMD_CONVERTTEMP': '0x44',
         'DS18B20_CMD_RSCRATCHPAD': '0xbe',
         'DS18B20_CMD_WSCRATCHPAD': '0x4e',

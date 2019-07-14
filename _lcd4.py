@@ -4,8 +4,10 @@ import collections
 
 
 def lcd4(
-    *, prefix, data_port, data_pins4567, e_port, e_pin, rs_port, rs_pin, header=True
+    *, prefix, data_pindesc4567, e_pindesc, rs_pindesc, header=True
 ):
+    assert len(data_pindesc4567)==4
+    assert data_pindesc4567[0].port == data_pindesc4567[1].port == data_pindesc4567[2].port == data_pindesc4567[3].port
     dico = collections.OrderedDict()
     dico["LCDPREFIX"] = prefix
 
@@ -27,15 +29,15 @@ def lcd4(
 
     constants = collections.OrderedDict(
         {
-            "LCD_DATA_PORT": data_port,
-            "LCD_DATA_PIN4": f"PIN{data_pins4567[0]}_bm",
-            "LCD_DATA_PIN5": f"PIN{data_pins4567[1]}_bm",
-            "LCD_DATA_PIN6": f"PIN{data_pins4567[2]}_bm",
-            "LCD_DATA_PIN7": f"PIN{data_pins4567[3]}_bm",
-            "LCD_E_PORT": e_port,
-            "LCD_E_PIN": f"PIN{e_pin}_bm",
-            "LCD_RS_PORT": rs_port,
-            "LCD_RS_PIN": f"PIN{rs_pin}_bm",
+            "LCD_DATA_PORT": data_pindesc4567[0].port,
+            "LCD_DATA_PIN4": data_pindesc4567[0].pin_bm,
+            "LCD_DATA_PIN5": data_pindesc4567[1].pin_bm,
+            "LCD_DATA_PIN6": data_pindesc4567[2].pin_bm,
+            "LCD_DATA_PIN7": data_pindesc4567[3].pin_bm,
+            "LCD_E_PORT": e_pindesc.port,
+            "LCD_E_PIN": e_pindesc.pin_bm,
+            "LCD_RS_PORT": rs_pindesc.port,
+            "LCD_RS_PIN": rs_pindesc.pin_bm,
             "LCD_CMD_LINEONE": "0x00",
             "LCD_CMD_LINETWO": "0x40",
             "LCD_CMD_CLEAR": "0b00000001",
