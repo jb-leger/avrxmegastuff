@@ -35,7 +35,7 @@ void LCDPREFIX_init()
 
     LCDPREFIX_write_instruction(LCD_CMD_DISPLAYON);
     _delay_us(80);
-}
+LCDCUSTOMCHARS}
 
 void LCDPREFIX_write_zchar(char* what)
 {
@@ -74,6 +74,39 @@ void LCDPREFIX_write_zchar(char* what)
         }
     }
 }
+
+
+void LCDPREFIX_write_lines(char* line0, char* line1)
+{
+    LCDPREFIX_write_instruction(LCD_CMD_CLEAR);
+    _delay_ms(4);
+
+    LCDPREFIX_write_instruction(LCD_CMD_SETCURSOR | LCD_CMD_LINEONE);
+    _delay_us(80);
+
+    LCDPREFIX_write_a_line(line0);
+    
+    LCDPREFIX_write_instruction(LCD_CMD_SETCURSOR | LCD_CMD_LINETWO);
+    _delay_us(80);
+    
+    LCDPREFIX_write_a_line(line1);
+}
+
+
+void LCDPREFIX_write_a_line(char* what)
+{
+    uint8_t i=0;
+    for(i=0; i<16; i++)
+    {
+        if(what[i]==0)
+            break;
+        if(what[i]=='\n')
+            break;
+        LCDPREFIX_write_char(what[i]);
+        _delay_us(80);
+    }
+}   
+
 
 void LCDPREFIX_write_char(uint8_t what)
 {

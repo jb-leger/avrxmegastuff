@@ -4,7 +4,8 @@ import collections
 
 
 def lcd4(
-    *, prefix, data_pindesc4567, e_pindesc, rs_pindesc, header=True
+    *, prefix, data_pindesc4567, e_pindesc, rs_pindesc, header=True,
+    custom_chars = None
 ):
     assert len(data_pindesc4567)==4
     assert data_pindesc4567[0].port == data_pindesc4567[1].port == data_pindesc4567[2].port == data_pindesc4567[3].port
@@ -15,6 +16,17 @@ def lcd4(
     with open(filename) as f:
         content = f.read()
 
+    lcdcustomchars = ''
+    if custom_chars is not None:
+        for i, seq in custom_chars.items():
+            cgramaddr = "0x{:02X}".format(0x40+8*i)
+            lcdcustomchars += "\n"
+            lcdcustomchars += f"    LCDPREFIX_write_instruction({cgramaddr}); _delay_us(80);\n"
+            for s in seq:
+                lcdcustomchars += f"    LCDPREFIX_write_char(0x{s:02X}); _delay_us(80);\n"
+
+    content = content.replace("LCDCUSTOMCHARS", lcdcustomchars);
+    
     for k, v in dico.items():
         content = content.replace(k, v)
 

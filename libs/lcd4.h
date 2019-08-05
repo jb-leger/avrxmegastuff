@@ -14,4 +14,6 @@ void LCDPREFIX_write(uint8_t what);
 void LCDPREFIX_write_instruction(uint8_t what);
 void LCDPREFIX_write_char(uint8_t what);
 void LCDPREFIX_write_zchar(char* what);
+void LCDPREFIX_write_a_line(char* what);
+void LCDPREFIX_write_lines(char* line0, char* line1);
 void LCDPREFIX_init();
