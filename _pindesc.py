@@ -24,3 +24,7 @@ class PinDesc:
     @property
     def pinctrl(self):
         return f"{self.port}.{self.pin_ctrl_name}"
+
+    @property
+    def evsys_chmux_gc(self):
+        return f"EVSYS_CHMUX_{self.port}_PIN{self._name[1]}_gc"
