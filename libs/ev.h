@@ -10,6 +10,8 @@ typedef enum state_ev
 
 #endif
 
+extern volatile ev_state_t EVPREFIX_internal_status;
+
 void EVPREFIX_init();
 uint8_t EVPREFIX_internal_step_close(uint16_t d);
 uint8_t EVPREFIX_internal_step_open(uint16_t d);

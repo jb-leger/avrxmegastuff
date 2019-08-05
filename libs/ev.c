@@ -12,13 +12,14 @@ void EVPREFIX_init()
 
 uint8_t EVPREFIX_internal_step_close(uint16_t d)
 {
-//    if(EVPREFIX_internal_status == EV_CLOSED)
-//        return 1;
+    if(EVPREFIX_internal_status == EV_CLOSED)
+        return 1;
 
     EVPREFIX_internal_status = EV_MID;
     if(d<5)
         return 0;
     
+    EVPREFIX_callback_close();
     uint16_t k;
     EV_CMD_PORT.OUTSET = EV_CMD_CLOSE_bm;
     for(k=0;k<d;k++)
@@ -34,13 +35,14 @@ uint8_t EVPREFIX_internal_step_close(uint16_t d)
 
 uint8_t EVPREFIX_internal_step_open(uint16_t d)
 {
-//    if(EVPREFIX_internal_status == EV_OPENED)
-//        return 1;
+    if(EVPREFIX_internal_status == EV_OPENED)
+        return 1;
 
     EVPREFIX_internal_status = EV_MID;
     if(d<5)
         return 0;
     
+    EVPREFIX_callback_open();
     uint16_t k;
     EV_CMD_PORT.OUTSET = EV_CMD_OPEN_bm;
     for(k=0;k<d;k++)
@@ -100,7 +102,7 @@ void EVPREFIX_open()
 {
     uint16_t k;
     for(k=0;k<1000;k++)
-        if(EVPREFIX_internal_step_close(10))
+        if(EVPREFIX_internal_step_open(10))
             break;
 }
 
@@ -108,12 +110,12 @@ void EVPREFIX_vidange()
 {
     uint16_t k;
     EVPREFIX_close();
-
     for(k=0;k<1000;k++)
-        if(EVPREFIX_internal_step_close(10))
+        if(EVPREFIX_internal_step_open(10))
             break;
+    EVPREFIX_close();
     uint16_t k2=0;
     for(k2=0;k2<k/2;k2++)
-        if(EVPREFIX_internal_step_close(10))
+        if(EVPREFIX_internal_step_open(10))
             break;
 }
