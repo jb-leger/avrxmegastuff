@@ -19,7 +19,7 @@ uint8_t EVPREFIX_internal_step_close(uint16_t d)
         return 0;
     
     if(EVPREFIX_internal_status == EV_OPENED)
-        d = 150;
+        d = 300;
     EVPREFIX_internal_status = EV_MID;
     
     EVPREFIX_callback_close();
@@ -45,7 +45,7 @@ uint8_t EVPREFIX_internal_step_open(uint16_t d)
         return 0;
     
     if(EVPREFIX_internal_status == EV_CLOSED)
-        d = 150;
+        d = 300;
     EVPREFIX_internal_status = EV_MID;
     
     EVPREFIX_callback_open();
