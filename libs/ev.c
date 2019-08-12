@@ -15,7 +15,7 @@ uint8_t EVPREFIX_internal_step_close(uint16_t d)
     if(EVPREFIX_internal_status == EV_CLOSED)
         return 1;
 
-    if(d<5)
+    if(d<EV_ACTION_LIMIT)
         return 0;
     
     if(EVPREFIX_internal_status == EV_OPENED)
@@ -41,7 +41,7 @@ uint8_t EVPREFIX_internal_step_open(uint16_t d)
     if(EVPREFIX_internal_status == EV_OPENED)
         return 1;
 
-    if(d<5)
+    if(d<EV_ACTION_LIMIT)
         return 0;
     
     if(EVPREFIX_internal_status == EV_CLOSED)
