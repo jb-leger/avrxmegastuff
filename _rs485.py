@@ -77,6 +77,7 @@ def rs485(
             "UART_USART": f"USART{name}",
             "UART_DRE_vect": f"USART{name}_DRE_vect",
             "UART_RXC_vect": f"USART{name}_RXC_vect",
+            "UART_TXC_vect": f"USART{name}_TXC_vect",
             "UART_deport": f"{de_pindesc.port}",
             "UART_depin": f"{de_pindesc.pin_bm}",
         }
