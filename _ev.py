@@ -4,7 +4,8 @@ import collections
 
 
 def ev(
-    *, prefix, cmd_open_close_pindesc, sensor_open_close_pindesc, header=True
+    *, prefix, cmd_open_close_pindesc, sensor_open_close_pindesc, header=True,
+    action_limit=5
 ):
     assert len(cmd_open_close_pindesc)==2
     assert len(sensor_open_close_pindesc)==2
@@ -39,6 +40,7 @@ def ev(
             "EV_SENSOR_CLOSE_bm": sensor_open_close_pindesc[1].pin_bm,
             "EV_SENSOR_OPEN_PINCTRL": sensor_open_close_pindesc[0].pinctrl,
             "EV_SENSOR_CLOSE_PINCTRL": sensor_open_close_pindesc[1].pinctrl,
+            "EV_ACTION_LIMIT": action_limit,
         }
     )
 
