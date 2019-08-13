@@ -14,3 +14,7 @@ void USARTPREFIX_putzchar(const char* zchar);
 void USARTPREFIX_putfloat(const float f, uint8_t decsize);
 void USARTPREFIX_printf(const char *fmt, ...);
 #endif
+
+#if rx
+void UART_rxhandler(const char *msg);
+#endif

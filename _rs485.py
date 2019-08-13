@@ -32,7 +32,7 @@ def rs485(
 
     dico["USARTPREFIX"] = prefix
 
-    filename = LIBDIR + "/uart." + ("h" if header else "c")
+    filename = LIBDIR + "/rs485." + ("h" if header else "c")
     with open(filename) as f:
         content = f.read()
 
