@@ -57,6 +57,7 @@ void USARTPREFIX_init()
 ISR(UART_RXC_vect)
 {
     uint8_t received = UART_USART.DATA;
+    USARTRXNOTIFY
     if(received==UART_rxtrigger)
     {
         USARTPREFIX_rxbuffer[USARTPREFIX_rxidx]=0;
@@ -65,6 +66,8 @@ ISR(UART_RXC_vect)
     }
     else
     {
+        if(USARTRXTRIGGERBEGIN)
+            USARTPREFIX_rxidx=0;
         USARTPREFIX_rxbuffer[USARTPREFIX_rxidx] = received;
         USARTPREFIX_rxidx++;
         if(USARTPREFIX_rxidx>=UART_rxlen)
@@ -76,6 +79,7 @@ ISR(UART_RXC_vect)
 #if tx
 ISR(UART_DRE_vect)
 {
+    USARTTXNOTIFY
     UART_deport.OUTSET = UART_depin;
     if(USARTPREFIX_txidxA == USARTPREFIX_txidxB)
     {

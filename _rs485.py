@@ -18,6 +18,9 @@ def rs485(
     char_size=8,
     rxtrigger="\n",
     rxhandler=None,
+    rxtriggerbegin=None,
+    rxnotify=None,
+    txnotify=None,
 ):
     if rx and rxhandler is None:
         raise Exception
@@ -29,6 +32,14 @@ def rs485(
 
     if rxhandler is not None:
         dico["UART_rxhandler"] = rxhandler
+
+    if(rxtriggerbegin is None):
+        dico["USARTRXTRIGGERBEGIN"] = "0"
+    else:
+        dico["USARTRXTRIGGERBEGIN"] = ' || '.join(f"received == '{x}'" for x in rxtriggerbegin)
+
+    dico["USARTRXNOTIFY"] = rxnotify if rxnotify is not None else ''
+    dico["USARTTXNOTIFY"] = txnotify if txnotify is not None else ''
 
     dico["USARTPREFIX"] = prefix
 
