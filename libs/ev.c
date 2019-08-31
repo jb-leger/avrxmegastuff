@@ -102,6 +102,7 @@ void EVPREFIX_close()
     for(k=0;k<1000;k++)
         if(EVPREFIX_internal_step_close(10))
             break;
+    EVPREFIX_internal_status = EV_CLOSED;
 }
 
 void EVPREFIX_open()
@@ -110,18 +111,23 @@ void EVPREFIX_open()
     for(k=0;k<1000;k++)
         if(EVPREFIX_internal_step_open(10))
             break;
+    EVPREFIX_internal_status = EV_OPENED;
 }
 
 void EVPREFIX_vidange()
 {
-    uint16_t k;
+    uint16_t kclose;
+    uint16_t kopen;
     EVPREFIX_close();
-    for(k=0;k<1000;k++)
+    for(kopen=0;kopen<1000;kopen++)
         if(EVPREFIX_internal_step_open(10))
             break;
-    EVPREFIX_close();
+    for(kclose=0;kclose<1000;kclose++)
+        if(EVPREFIX_internal_step_close(10))
+            break;
+    uint16_t kmin = (kopen<kclose)?kopen:kclose;
     uint16_t k2=0;
-    for(k2=0;k2<k/2;k2++)
+    for(k2=0;k2<kmin/2;k2++)
         if(EVPREFIX_internal_step_open(10))
             break;
 }
