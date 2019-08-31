@@ -125,9 +125,20 @@ void EVPREFIX_vidange()
     for(kclose=0;kclose<1000;kclose++)
         if(EVPREFIX_internal_step_close(10))
             break;
-    uint16_t kmin = (kopen<kclose)?kopen:kclose;
+    uint8_t kmin;
+    if(kopen<900)
+        kmin = kopen/2;
+    else
+    {
+        if(kclose<900)
+            kmin = kclose/2;
+        else
+            kmin = 50;
+    }
+    kmin = 50;
+
     uint16_t k2=0;
-    for(k2=0;k2<kmin/2;k2++)
+    for(k2=0;k2<kmin;k2++)
         if(EVPREFIX_internal_step_open(10))
             break;
 }
