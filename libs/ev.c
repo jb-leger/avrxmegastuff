@@ -135,7 +135,6 @@ void EVPREFIX_vidange()
         else
             kmin = 50;
     }
-    kmin = 50;
 
     uint16_t k2=0;
     for(k2=0;k2<kmin;k2++)
