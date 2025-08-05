@@ -12,12 +12,21 @@ typedef enum state_ev
 
 extern volatile ev_state_t EVPREFIX_internal_status;
 
-void EVPREFIX_init();
-uint8_t EVPREFIX_internal_step_close(uint16_t d, uint8_t force);
-uint8_t EVPREFIX_internal_step_open(uint16_t d, uint8_t force);
-uint8_t EVPREFIX_step_close(uint16_t d, uint8_t force);
-uint8_t EVPREFIX_step_open(uint16_t d, uint8_t force);
-void EVPREFIX_close();
-void EVPREFIX_force_close();
-void EVPREFIX_open();
-void EVPREFIX_vidange();
+void
+EVPREFIX_init();
+uint8_t
+EVPREFIX_internal_step_close(uint16_t d, uint8_t force);
+uint8_t
+EVPREFIX_internal_step_open(uint16_t d, uint8_t force);
+uint8_t
+EVPREFIX_step_close(uint16_t d, uint8_t force);
+uint8_t
+EVPREFIX_step_open(uint16_t d, uint8_t force);
+void
+EVPREFIX_close();
+void
+EVPREFIX_force_close();
+void
+EVPREFIX_open();
+void
+EVPREFIX_vidange();
